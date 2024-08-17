@@ -4,7 +4,18 @@ import (
 	"testing"
 )
 
+// func setup() func() {
+// 	_, err := exec.Command("cp -R fixtures /tmp").Output()
+// 	utils.CheckError(err)
+
+// 	return func() {
+// 		_, err := exec.Command("rm -rf /tmp/fixtures").Output()
+// 		utils.CheckError(err)
+// 	}
+// }
+
 func TestNewMedia_ExpectValidNewMedia(t *testing.T) {
+
 	media := NewMedia("Foo", "MP3")
 
 	if media != NewMedia("Foo", "MP3") {
@@ -29,13 +40,4 @@ func TestOpenMedia_ExpectMP3File(t *testing.T) {
 		t.Fatalf("Expeceted media, %s, to match %s", media, expectedMedia)
 	}
 
-}
-
-func (m *Media) equals(other *Media) bool {
-
-	if m.Name == other.Name && m.FileType == other.FileType {
-		return true
-	}
-
-	return false
 }

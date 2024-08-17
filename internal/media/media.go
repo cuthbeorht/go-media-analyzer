@@ -11,6 +11,7 @@ import (
 type Media struct {
 	Name     string
 	FileType string
+	FullPath string
 }
 
 func NewMedia(name string, fileType string) Media {
@@ -18,6 +19,15 @@ func NewMedia(name string, fileType string) Media {
 		Name:     name,
 		FileType: fileType,
 	}
+}
+
+func (m *Media) equals(other *Media) bool {
+
+	if m.Name == other.Name && m.FileType == other.FileType && m.FullPath == other.FullPath {
+		return true
+	}
+
+	return false
 }
 
 func OpenMedia(fullPath string) (*Media, error) {
