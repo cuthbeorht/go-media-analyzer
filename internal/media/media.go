@@ -1,6 +1,7 @@
 package media
 
 import (
+	"errors"
 	"os"
 
 	"github.com/cuthbeorht/go-media-analyzer/internal/utils"
@@ -18,10 +19,17 @@ func NewMedia(name string, fileType string) Media {
 	}
 }
 
-func OpenMedia(fullPath string) Media {
+func OpenMedia(fullPath string) (*Media, error) {
 
-	_, err := os.ReadFile(fullPath)
+	binaryData, err := os.Open(fullPath)
 	utils.CheckError(err)
 
-	return NewMedia("Foo", "MP3")
+	fileStats, err := binaryData.Stat()
+	utils.CheckError(err)
+
+	if fileStats.Size() == 0 {
+		return nil, errors.New("expected file to have a size greater than zero")
+	}
+	newMedia := NewMedia("Foo", "MP3")
+	return &newMedia, nil
 }
