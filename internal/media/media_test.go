@@ -19,3 +19,23 @@ func TestOpenMedia_ExpectEmptyFile(t *testing.T) {
 		t.Fatal("Expecting error")
 	}
 }
+
+func TestOpenMedia_ExpectMP3File(t *testing.T) {
+	media, _ := OpenMedia("/tmp/fixtures/sample.mp3")
+
+	expectedMedia := NewMedia("sample.mp3", "mp3")
+
+	if !expectedMedia.equals(media) {
+		t.Fatalf("Expeceted media, %s, to match %s", media, expectedMedia)
+	}
+
+}
+
+func (m *Media) equals(other *Media) bool {
+
+	if m.Name == other.Name && m.FileType == other.FileType {
+		return true
+	}
+
+	return false
+}
