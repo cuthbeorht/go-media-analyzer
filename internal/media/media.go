@@ -14,10 +14,11 @@ type Media struct {
 	FullPath string
 }
 
-func NewMedia(name string, fileType string) Media {
+func NewMedia(name string, fileType string, fullPath string) Media {
 	return Media{
 		Name:     name,
 		FileType: fileType,
+		FullPath: fullPath,
 	}
 }
 
@@ -47,6 +48,6 @@ func OpenMedia(fullPath string) (*Media, error) {
 	utils.CheckError(err)
 	kind, _ := filetype.Match(buffer)
 
-	newMedia := NewMedia(fileStats.Name(), kind.Extension)
+	newMedia := NewMedia(fileStats.Name(), kind.Extension, fullPath)
 	return &newMedia, nil
 }

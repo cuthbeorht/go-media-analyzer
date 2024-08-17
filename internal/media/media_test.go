@@ -16,9 +16,9 @@ import (
 
 func TestNewMedia_ExpectValidNewMedia(t *testing.T) {
 
-	media := NewMedia("Foo", "MP3")
+	media := NewMedia("Foo", "MP3", "/tmp/fixtures/sample.mp3")
 
-	if media != NewMedia("Foo", "MP3") {
+	if media != NewMedia("Foo", "MP3", "/tmp/fixtures/sample.mp3") {
 		t.Fatal("Expected NewMedia{Foo, MP3}")
 	}
 }
@@ -34,7 +34,7 @@ func TestOpenMedia_ExpectEmptyFile(t *testing.T) {
 func TestOpenMedia_ExpectMP3File(t *testing.T) {
 	media, _ := OpenMedia("/tmp/fixtures/sample.mp3")
 
-	expectedMedia := NewMedia("sample.mp3", "mp3")
+	expectedMedia := NewMedia("sample.mp3", "mp3", "/tmp/fixtures/sample.mp3")
 
 	if !expectedMedia.equals(media) {
 		t.Fatalf("Expeceted media, %s, to match %s", media, expectedMedia)
