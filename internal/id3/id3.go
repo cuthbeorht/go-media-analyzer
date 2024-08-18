@@ -27,9 +27,9 @@ func NewId3Tag(header Id3Header) Id3Tag {
 }
 
 func ReadId3(buff []byte) (Id3Tag, error) {
-	rawHeader := buff[0:9]
+	rawHeader := buff[0:10]
 
-	identifier := rawHeader[0:2]
+	identifier := rawHeader[0:3]
 
 	header := NewId3Header("", string(identifier), "", 0)
 
