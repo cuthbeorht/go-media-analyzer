@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os"
 
-	"github.com/cuthbeorht/go-media-analyzer/internal/utils"
+	"github.com/cuthbeorht/go-media-analyzer/src/internal/utils"
 	"github.com/h2non/filetype"
 )
 
