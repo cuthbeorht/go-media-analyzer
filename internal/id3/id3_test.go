@@ -14,7 +14,7 @@ func TestReadId3_ValidData(t *testing.T) {
 
 	tag, _ := ReadId3(buffer)
 
-	if tag.Header.Identifier != "ID3" {
+	if tag.Header.Identifier != "ID3" || tag.Header.Version != "03.00" {
 		t.Fatal("Expected Identifier should be ID3. It is ", tag.Header.Identifier)
 	}
 }

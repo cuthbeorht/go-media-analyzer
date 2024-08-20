@@ -1,5 +1,10 @@
 package id3
 
+import (
+	"encoding/hex"
+	"strings"
+)
+
 type Id3Header struct {
 	Version    string
 	Identifier string
@@ -31,7 +36,10 @@ func ReadId3(buff []byte) (Id3Tag, error) {
 
 	identifier := rawHeader[0:3]
 
-	header := NewId3Header("", string(identifier), "", 0)
+	major := hex.EncodeToString(rawHeader[3:4])
+	minor := hex.EncodeToString(rawHeader[4:5])
+
+	header := NewId3Header(strings.Join([]string{major, ".", minor}, ""), string(identifier), "", 0)
 
 	return NewId3Tag(header), nil
 }
