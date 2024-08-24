@@ -24,7 +24,7 @@ func TestNewMedia_ExpectValidNewMedia(t *testing.T) {
 }
 
 func TestOpenMedia_ExpectEmptyFile(t *testing.T) {
-	_, error := OpenMedia("/tmp/fixtures/empty.mp3")
+	_, error := OpenMedia("../../test/fixtures/empty.mp3")
 
 	if error == nil {
 		t.Fatal("Expecting error")
@@ -32,9 +32,9 @@ func TestOpenMedia_ExpectEmptyFile(t *testing.T) {
 }
 
 func TestOpenMedia_ExpectMP3File(t *testing.T) {
-	media, _ := OpenMedia("/tmp/fixtures/sample.mp3")
+	media, _ := OpenMedia("../../test/fixtures/sample.mp3")
 
-	expectedMedia := NewMedia("sample.mp3", "mp3", "/tmp/fixtures/sample.mp3")
+	expectedMedia := NewMedia("sample.mp3", "mp3", "../../test/fixtures/sample.mp3")
 
 	if !expectedMedia.equals(media) {
 		t.Fatalf("Expeceted media, %s, to match %s", media, expectedMedia)
