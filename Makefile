@@ -6,6 +6,6 @@ test:
 	@echo "Executing test suite"
 	@go test ./...
 
-run:
-	@echo "Running media analyzer"
-
+publish:
+	@echo "Publishing new version"
+	sh ./build/cicd/scripts/publish.sh
