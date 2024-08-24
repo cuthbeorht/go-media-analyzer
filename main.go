@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/cuthbeorht/go-media-analyzer/src/media"
+	"github.com/cuthbeorht/go-media-analyzer/pkg/media"
 )
 
 func main() {
