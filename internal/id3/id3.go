@@ -3,7 +3,6 @@ package id3
 import (
 	"encoding/hex"
 	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -16,7 +15,7 @@ type Id3HeaderFlags struct {
 type Id3Header struct {
 	Version    string
 	Identifier string
-	Flags      string
+	Flags      Id3HeaderFlags
 	Size       int
 }
 
@@ -32,7 +31,7 @@ func NewId3HeaderFlags(unsync bool, extended bool, experimental bool) Id3HeaderF
 	}
 }
 
-func NewId3Header(version string, identifier string, flags string, size int) Id3Header {
+func NewId3Header(version string, identifier string, flags Id3HeaderFlags, size int) Id3Header {
 	return Id3Header{
 		Version:    version,
 		Identifier: identifier,
@@ -50,18 +49,38 @@ func NewId3Tag(header Id3Header) Id3Tag {
 func ReadId3(buff []byte) (Id3Tag, error) {
 	rawHeader := buff[0:10]
 
-	identifier := rawHeader[0:3]
+	identifier := identifier(rawHeader)
 
-	major := hex.EncodeToString(rawHeader[3:4])
-	minor := hex.EncodeToString(rawHeader[4:5])
+	version := version(rawHeader)
 
-	flags, _ := strconv.Atoi(string(rawHeader[6:7]))
-	fmt.Println("Flags: ", flags)
+	flags := flags(rawHeader)
 
-	size := rawHeader[7:11]
-	fmt.Println("Size: ", size)
+	size := size(rawHeader)
 
-	header := NewId3Header(strings.Join([]string{major, ".", minor}, ""), string(identifier), "", 0)
+	header := NewId3Header(version, string(identifier), flags, size)
 
 	return NewId3Tag(header), nil
+}
+
+func identifier(fullRawHeader []byte) string {
+
+	return string(fullRawHeader[0:3])
+}
+
+func version(fullRawHeader []byte) string {
+	major := hex.EncodeToString(fullRawHeader[3:4])
+	minor := hex.EncodeToString(fullRawHeader[4:5])
+
+	return strings.Join([]string{major, ".", minor}, "")
+}
+
+func flags(fullRawHeader []byte) Id3HeaderFlags {
+
+	return NewId3HeaderFlags(false, false, false)
+}
+
+func size(fullRawHeader []byte) int {
+	theSize := fullRawHeader[7:11]
+	fmt.Println("the size: ", theSize)
+	return 0
 }
