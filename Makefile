@@ -2,9 +2,9 @@ setup:
 	@echo "Fetching dependencies"
 	@go mod tidy
 
-test:	
+test-all:	
 	@echo "Executing test suite"
-	@go test ./...
+	@go test -v ./...
 
 publish:
 	@echo "Publishing new version"
