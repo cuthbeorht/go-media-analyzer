@@ -7,19 +7,31 @@ import (
 	"github.com/cuthbeorht/go-media-analyzer/internal/utils"
 )
 
-func TestReadId3_ValidData(t *testing.T) {
+func TestReadId3_ExpectCorrectIdentifier(t *testing.T) {
 
 	buffer, err := os.ReadFile("../../test/fixtures/sample.mp3")
 	utils.CheckError(err)
 
 	tag, _ := ReadId3(buffer)
 
-	if tag.Header.Identifier != "ID3" || tag.Header.Version != "03.00" {
+	if tag.Header.Identifier != "ID3" {
 		t.Fatal("Expected Identifier should be ID3. It is ", tag.Header.Identifier)
 	}
 }
 
 func TestReadId3_ExpectCorrectVersion(t *testing.T) {
+
+	buffer, err := os.ReadFile("../../test/fixtures/sample.mp3")
+	utils.CheckError(err)
+
+	tag, _ := ReadId3(buffer)
+
+	if tag.Header.Version != "03.00" {
+		t.Fatal("Expected Identifier should be ID3. It is ", tag.Header.Identifier)
+	}
+}
+
+func TestReadId3_ExpectCorrectFlag(t *testing.T) {
 	buffer, err := os.ReadFile("../../test/fixtures/sample.mp3")
 	utils.CheckError(err)
 

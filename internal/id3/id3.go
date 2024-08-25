@@ -75,8 +75,17 @@ func version(fullRawHeader []byte) string {
 }
 
 func flags(fullRawHeader []byte) Id3HeaderFlags {
+	// flagsByte := fullRawHeader[6:7]
+	// fmt.Printf("%08b", flagsByte)
+	// thing := bits.OnesCount8(flagsByte[0])
+	unsynchronisationFlag := false
+	extendedFlag := false
+	experimentalFlag := false
+	// if 1<<flagsByte[0] == 1 {
+	// 	unsynchronisationFlag := true
+	// }
 
-	return NewId3HeaderFlags(false, false, false)
+	return NewId3HeaderFlags(unsynchronisationFlag, extendedFlag, experimentalFlag)
 }
 
 func size(fullRawHeader []byte) int {
