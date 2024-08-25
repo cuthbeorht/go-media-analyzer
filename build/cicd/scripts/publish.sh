@@ -12,7 +12,7 @@ if [ $CURRENT_BRANCH != $PROTECTED_BRANCH ]; then
     exit -1
 fi
 
-if [ $CURRENT_VERSION == $NEW_VERSION ]; then
+if [ $CURRENT_VERSION == $NEW_VERSION ]; then    
     echo "No new version to publish"
 fi
 
