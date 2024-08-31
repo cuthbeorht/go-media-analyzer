@@ -48,7 +48,7 @@ func TestReadId3_ExpectCorrectSize(t *testing.T) {
 
 	tag, _ := ReadId3(buffer)
 
-	if tag.Header.Size != 0 {
-		t.Fatal("Expected size of 0. Got ", tag.Header.Size)
+	if tag.Header.Size != 156244 {
+		t.Fatal("Expected size of 156244. Got ", tag.Header.Size)
 	}
 }

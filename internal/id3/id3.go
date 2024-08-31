@@ -2,7 +2,7 @@ package id3
 
 import (
 	"encoding/hex"
-	"fmt"
+	"errors"
 	"strings"
 )
 
@@ -55,9 +55,9 @@ func ReadId3(buff []byte) (Id3Tag, error) {
 
 	flags := flags(rawHeader)
 
-	size := size(rawHeader)
+	size, _ := size(rawHeader)
 
-	header := NewId3Header(version, string(identifier), flags, size)
+	header := NewId3Header(version, string(identifier), flags, int(size))
 
 	return NewId3Tag(header), nil
 }
@@ -96,8 +96,21 @@ func flags(fullRawHeader []byte) Id3HeaderFlags {
 	return NewId3HeaderFlags(unsynchronisationFlag, extendedFlag, experimentalFlag)
 }
 
-func size(fullRawHeader []byte) int {
+func size(fullRawHeader []byte) (uint32, error) {
+	// https: //github.com/mikkyang/id3-go
+	base := uint32(7)
+
 	theSize := fullRawHeader[7:11]
-	fmt.Println("the size: ", theSize)
-	return 0
+
+	i := uint32(0)
+	for _, b := range theSize {
+		if b >= (1 << base) {
+			err := errors.New("byte integer: exceed max bit")
+			return uint32(255), err
+		}
+
+		i = (i << base) | uint32(b)
+	}
+
+	return i, nil
 }
